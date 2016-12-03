@@ -1,0 +1,11 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb-base",
+  "plugins": [
+    "flowtype"
+  ],
+  "rules": {
+    "no-nested-ternary": 0,
+    "flowtype/define-flow-type": 1
+  }
+}
