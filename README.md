@@ -69,11 +69,11 @@ function actions(): Array<Action> {
 ```
 
 Although this implementation is quite trivial, this function could be used to optimize learning by filtering the action pool to include only useful actions.
-For example, if you know that movement against the grid walls doesn't change the state, so you could filter this actions out in these situations.
-That said, you should be careful not to taint the agent with your would knowledge from the problem. *You're just a human, you **do not**  know better*
+For example, if you know that movement against the grid walls doesn't change the state, you could filter this actions out in these situations.
+That said, you should be careful not to taint the agent with your knowledge from the problem. *You're just a human, you do not know better*
 
 ### Act function [¹](src/act.js)
-This function maps an state and action to the next state.
+This function maps a state and action to the next state.
 In this example, we just apply the action to the agents `r` and `c` properties, considering some special cases:
 - If the resulting agent's position includes a goal, it is removed from the goals array.
 - If the resulting agent's position includes a hazard, the `dead` property is set on the agent.
@@ -100,13 +100,13 @@ It might seem mean to punish the agent for no reason, right?
 Turns out we don't want to foster a lazy behavior, so we need this.
 The values were all chosen arbitrarily and changing them changes the way the agent learns.
 
-### Final [¹](src/final.js)
+### Final function [¹](src/final.js)
 This function just says if the game is over or not.
 In this example we consider a state:
 - a win if there's no more love to find
 - a loss if there's no more Robson
 
-A final state is just an state that is a win or a loss.
+A final state is just a state that is a win or a loss.
 
 ```javascript
 const defeat = (state: State): boolean => state.robson.dead;
@@ -156,4 +156,4 @@ There's actually a bunch of stuff to try out, for example:
 To you, for reading, sure.
 But mainly to Robson. He made this all possible.
 
-*May your deaths be meaningful and help you learn to find love!*
+*May his deaths be meaningful and help him find love!*
