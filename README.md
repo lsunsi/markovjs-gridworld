@@ -1,6 +1,6 @@
 # markovjs-gridworld
 
-[![Release](https://img.shields.io/badge/Release-0.1.0.SNAPSHOT-blue.svg?style=flat-square)](https://github.com/lsunsi/markovjs-gridworld/releases)
+[![Release](https://img.shields.io/badge/Release-0.1.0-blue.svg?style=flat-square)](https://github.com/lsunsi/markovjs-gridworld/releases)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](https://github.com/lsunsi/markovjs-gridworld/blob/master/LICENSE)
 
 This is a game implementation example for the package [markovjs](https://github.com/lsunsi/markovjs).
