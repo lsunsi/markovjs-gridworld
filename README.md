@@ -20,11 +20,11 @@ This game is about a robot named Robson and his search for love while trying to 
 The grid layout is customizable: number of rows and columns, where the ❤s and 💀s are, etc.
 The default example looks like that:
 
-<pre style="display: inline-block">
+```
 🤖 💀 ❤
 ⬚ ⬚ ⬚
 ⬚ ⬚ ⬚
-</pre>
+```
 
 Let's just hope Robson knows better to not go → right away.
 
@@ -32,7 +32,7 @@ Let's just hope Robson knows better to not go → right away.
 This is where I'm gonna comment the actual code.
 Turns out it's pretty basic, so don't worry.
 
-### State type
+### State type [¹](src/types.js) [²](src/state.js)
 The state type must code all information needed for the game functions to work.
 That doesn't mean the agent should include it all in it's observation of the state.
 What the agent observes is the state subset it learns to act in.
@@ -58,7 +58,7 @@ function toString(): string {
 }
 ```
 
-### Actions function
+### Actions function [¹](src/actions.js)
 This function returns which actions can be taken by the agent in each state.
 In this example, we just returned all actions for any state.
 
@@ -72,7 +72,7 @@ Although this implementation is quite trivial, this function could be used to op
 For example, if you know that movement against the grid walls doesn't change the state, so you could filter this actions out in these situations.
 That said, you should be careful not to taint the agent with your would knowledge from the problem. *You're just a human, you **do not**  know better*
 
-### Act function
+### Act function [¹](src/act.js)
 This function maps an state and action to the next state.
 In this example, we just apply the action to the agents `r` and `c` properties, considering some special cases:
 - If the resulting agent's position includes a goal, it is removed from the goals array.
@@ -82,24 +82,38 @@ In this example, we just apply the action to the agents `r` and `c` properties, 
 One detail: if the agent is `dead`, it shouldn't `act` anymore.
 Calling this function with a dead agent state might reanimate it, *and zombies are beyond this implementation intentions*.
 
-### Reward function
+### Reward function [¹](src/reward.js)
 This function rewards or punishes the agent for some experience.
 In this example this function considers three components:
 - If the agent found a new goal, it is **rewarded** (+1) *because love feels nice*
 - If the agent died, it is **punished** (-1) *because dying doesn't*
 - If the agent did anything, it is **punished** (-0.01) *because there's no such thing as a free lunch*
 
+```javascript
+const reward = (state: State, prevState: State): number =>
+  prevState.goals.length - state.goals.length
+  - (state.robson.dead ? 1 : 0)
+  - 0.01;
+```
+
 It might seem mean to punish the agent for no reason, right?
 Turns out we don't want to foster a lazy behavior, so we need this.
 The values were all chosen arbitrarily and changing them changes the way the agent learns.
 
-### Final
+### Final [¹](src/final.js)
 This function just says if the game is over or not.
 In this example we consider a state:
 - a win if there's no more love to find
 - a loss if there's no more Robson
 
 A final state is just an state that is a win or a loss.
+
+```javascript
+const defeat = (state: State): boolean => state.robson.dead;
+const victory = (state: State): boolean => state.goals.length === 0;
+
+const final = (state: State): boolean => defeat(state) || victory(state);
+```
 
 ## Result
 - Initial values: **0.0**
@@ -108,28 +122,26 @@ A final state is just an state that is a win or a loss.
 - Exploration rate: **10%**
 - Training sessions: **10**
 - Q-Learning
-
-<pre style="display: inline-block; margin-right: 8px">
+```
 ↓ 💀 ❤
 🤖 ⬚ ⬚
 ⬚ ⬚ ⬚
-</pre>
-<pre style="display: inline-block; margin-right: 8px">
+```
+```
 ⬚ 💀 ❤
 → 🤖 ⬚
 ⬚ ⬚ ⬚
-</pre>
-<pre style="display: inline-block; margin-right: 8px">
+```
+```
 ⬚ 💀 ❤
 ⬚ → 🤖
 ⬚ ⬚ ⬚
-</pre>
-<pre style="display: inline-block; margin-right: 8px">
+```
+```
 ⬚ 💀 🤖
 ⬚ ⬚ ↑
 ⬚ ⬚ ⬚
-</pre>
-
+```
 ## Considerations
 Of course this is a silly example, but it should help you get used to the abstractions proposed by `markovjs`.
 
