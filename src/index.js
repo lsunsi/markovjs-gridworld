@@ -25,7 +25,7 @@ markov()
   .memory(memory, memory.init(0.0))
   .policies(egreedy(ε), greedy)
   .game(game, initial)
-  .train(1000, α, γ)
+  .train(10, α, γ)
   .play(e => // eslint-disable-next-line no-console
     console.log(format.episode(e)),
   );
