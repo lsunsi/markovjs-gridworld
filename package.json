@@ -1,7 +1,7 @@
 {
   "name": "markovjs-gridworld",
   "description": "gridworld implementation example for markovjs package",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "index.js",
   "author": "lsunsi",
   "license": "MIT",
