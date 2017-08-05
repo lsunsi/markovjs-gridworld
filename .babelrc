@@ -4,6 +4,6 @@
     "transform-flow-strip-types"
   ],
   "presets": [
-    "latest"
+    "env"
   ]
 }
