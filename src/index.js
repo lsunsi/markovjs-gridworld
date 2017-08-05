@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import markov from 'markovjs';
 import * as memory from 'markovjs/memory';
 import { egreedy, greedy } from 'markovjs/policies';
